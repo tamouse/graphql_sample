@@ -4,6 +4,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // must match config.webpack.dev_server.port
 var devServerPort = 3808;
@@ -13,7 +14,7 @@ var production = process.env.NODE_ENV === 'production';
 
 var config = {
   entry: {
-    'client': './client/index.js'
+    'client': './client/src/index.js'
   },
 
   output: {
@@ -34,6 +35,34 @@ var config = {
     ]
   },
 
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/, loader: "babel-loader", exclude: /(node_modules|bower_components)/
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader']
+        })
+      },
+      {
+        test: /\.s(a|c)ss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          { loader: "file-loader" },
+          { loader: "svgo-loader" }
+        ]
+      }
+    ]
+  },
   plugins: [
     // must match config.webpack.manifest_filename
     new StatsPlugin('manifest.json', {
@@ -43,7 +72,10 @@ var config = {
       chunks: false,
       modules: false,
       assets: true
-    })]
+    }),
+    new ExtractTextPlugin("client.css")
+  ],
+
 };
 
 if (production) {
