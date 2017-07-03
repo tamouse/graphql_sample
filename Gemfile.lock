@@ -58,6 +58,9 @@ GEM
       thor (~> 0.19.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    graphiql-rails (1.4.2)
+      rails
+    graphql (1.6.4)
     i18n (0.8.4)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -153,6 +156,8 @@ DEPENDENCIES
   factory_girl_rails
   faker
   foreman
+  graphiql-rails
+  graphql
   pg (~> 0.15)
   pry-byebug
   pry-nav

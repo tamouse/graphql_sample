@@ -51,3 +51,7 @@ end
 gem 'webpack-rails'
 
 gem 'foreman'
+
+gem "graphql"
+
+gem 'graphiql-rails', group: :development
