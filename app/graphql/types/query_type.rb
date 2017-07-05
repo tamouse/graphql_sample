@@ -1,17 +1,14 @@
 Types::QueryType = GraphQL::ObjectType.define do
   name "Query"
-  # Add root-level fields here.
-  # They will be entry points for queries on your schema.
-
-  field :post, Types::PostType do
-    argument :id, !types.ID
-    description "find a post by id"
-    resolve ->(obj, args, ctx) { Post.find_by(id: args["id"]) }
+  field :account, Types::AccountType do
+    argument :id, !types.Int
+    description "retrieve posts"
+    resolve ->(obj, args, ctx) { Account.find_by(id: args[:id])}
   end
-
-  field :posts, Types::PostsType do
-    description "collection of posts"
-    resolve ->(obj, args, ctx) { Post.select(:id, :title, :published) }
+  field :post, Types::PostType do
+    argument :id, !types.Int
+    description "retrieve a post"
+    resolve ->(obj, args, ctx) { Post.find_by(id: args[:id])}
   end
 
 end
